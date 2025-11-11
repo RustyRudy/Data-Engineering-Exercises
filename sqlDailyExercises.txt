@@ -1,0 +1,156 @@
+--DAILY SQL1
+create TABLE Employee(
+empid int,
+name varchar(255),
+supervisor int,
+salary int
+);
+
+create TABLE Bonus(
+empid int,
+bonus int
+);
+
+INSERT INTO employee (empid, name, supervisor, salary)
+VALUES
+	(3, 'Brad', NULL, 4000),
+	(1, 'John', 3, 1000),
+	(2, 'Dan', 3, 2000),
+	(4, 'Thomas', 3, 4000);
+
+select * FROM employee;
+
+INSERT INTO bonus (empid, bonus)
+VALUES
+	(1, NULL),
+	(3, NULL),
+	(2, 500),
+	(4, 2000);
+
+select * FROM bonus;
+
+--TRUNCATE TABLE bonus; --drops all rows from a table
+
+select employee.name, bonus.bonus FROM employee INNER JOIN Bonus ON employee.empid = bonus.empid 
+WHERE bonus.bonus < 1000 OR bonus.bonus IS NULL;
+---------**************************************************************-----------
+--DAILY SQL2
+
+Create Table customer(
+id int,
+name varchar(255),
+refree_id int
+);
+
+INSERT INTO customer (id, name, refree_id)
+VALUES
+	(1, 'Will', NULL),
+	(2, 'Jane', NULL),
+	(3, 'Alex', 2),
+	(4, 'Bill', NULL),
+	(5, 'Zack', 1),
+	(6, 'Mark', 2);
+
+SELECT * FROM customer;
+
+Select name FROM customer WHERE refree_id !=2 OR refree_id IS null ;
+---------**************************************************************-----------
+--DAILY SQL3
+
+Create table school (
+student varchar(255),
+class	varchar(255)
+);
+
+INSERT INTO school (student, class)
+VALUES
+	('A', 'Math'),
+	('B', 'English'),
+	('C', 'Math'),
+	('D', 'Biology'),
+	('E', 'Math'),
+	('F', 'Computer'),
+	('G', 'Math'),
+	('H', 'Math'),
+	('I', 'Math');
+
+select * from school;
+
+--same as the expression below: Select class, count(class) from school group by class;
+--Select COUNT(class = 'Math'), COUNT(class = 'English'), COUNT(class = 'Biology'),
+--COUNT(class = 'Computer')FROM school group by class;
+
+Select class, count(class) from school group by class;
+
+Select class, count(class) from school group by class having count(class) > 5;
+
+
+---------**************************************************************-----------
+--DAILY SQL5
+
+Create Table salesperson(
+sales_id int,
+name varchar,
+salary int,
+commission_rate int,
+hire_date date
+);
+
+Create Table company(
+com_id int,
+name varchar,
+city varchar
+);
+
+Create Table orders(
+order_id int,
+order_date date,
+com_id int,
+sales_id int,
+amount int
+);
+
+INSERT INTO salesperson (sales_id, name, salary, commission_rate, hire_date)
+VALUES
+(1, 'John', 100000, 6, '2006-4-1'),
+(2, 'Amy', 12000, 5, '2010-5-1'),
+(3, 'Mark', 65000, 12, '2008-12-25'),
+(4, 'Pam', 25000, 25, '2005-1-1'),
+(5, 'Alex', 5000, 10, '2007-2-3');
+
+select * from salesperson;
+
+INSERT INTO company (com_id, name, city)
+VALUES
+	(1, 'RED', 'Boston'),
+	(2, 'ORANGE', 'New York'),
+	(3, 'YELLOW', 'Boston'),
+	(4, 'GREEN', 'Austin');
+
+select * from company;
+
+INSERT INTO orders (order_id, order_date, com_id, sales_id, amount)
+VALUES
+	(1, '2014-1-1', 3, 4, 10000),
+	(2, '2014-1-2', 4, 5, 5000),
+	(3, '2014-1-3', 1, 1, 50000),
+	(4, '2014-1-4', 1, 4, 25000);
+
+
+select * from orders;
+
+
+
+SELECT salesperson.name from salesperson 
+inner join orders on salesperson.sales_id = orders.sales_id 
+inner join company on company.com_id = orders.com_id
+where (orders.com_id != 1);
+
+---------sql query exercise 1 done--------------------------------------------
+
+
+
+
+
+
+
