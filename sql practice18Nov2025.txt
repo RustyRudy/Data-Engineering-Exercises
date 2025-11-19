@@ -1,0 +1,56 @@
+-------------Practice Qs 1------------------------------------------------
+create table ActorDirector(
+actor_id int,
+director_id int,
+timestamp int
+);
+
+insert into ActorDirector (actor_id, director_id, timestamp)
+Values
+	(1, 1, 0),
+	(1, 1, 1),
+	(1, 1, 2),
+	(1, 2, 3),
+	(1, 2, 4),
+	(2, 1, 5),
+	(2, 1, 6);
+
+select * from actordirector;
+
+--with displaying the number of times an actor and director cooperated together------
+Select actor_id, director_id, count(*) From actordirector group by actor_id, director_id having count(*) >= 3;
+--without displaying the number of times an actor and director cooperated together------
+Select actor_id, director_id From actordirector group by actor_id, director_id having count(*) >= 3;
+
+-------------Practice Qs 2------------------------------------------------
+create table sales(
+sale_id int,
+product_id int,
+year int,
+quantity int,
+price int
+);
+
+create table product(
+product_id int,
+product_name varchar
+);
+
+insert into sales (sale_id, product_id, year, quantity, price)
+Values
+	(1, 100, 2008, 10, 5000),
+	(2, 100, 2009, 12, 5000),
+	(7, 200, 2011, 15, 9000);
+
+insert into product (product_id, product_name)
+Values
+	(100, 'Nokia'),
+	(200, 'Apple'),
+	(300, 'Samsung');
+
+Select product.product_name, sales.year, sales.price From sales
+Inner Join product
+On product.product_id = sales.product_id; 
+
+
+
