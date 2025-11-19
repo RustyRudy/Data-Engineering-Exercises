@@ -52,5 +52,40 @@ Select product.product_name, sales.year, sales.price From sales
 Inner Join product
 On product.product_id = sales.product_id; 
 
+-------------Practice Qs 3------------------------------------------------
+create table project(
+project_id int,
+employee_id int
+);
+
+create table employee(
+employee_id int,
+name varchar,
+experience_years int
+);
+
+insert into project (project_id, employee_id)
+Values
+	(1, 1),
+	(1, 2),
+	(1, 3),
+	(2, 1),
+	(2, 4);
+
+
+insert into employee (employee_id, name, experience_years)
+Values
+	(1, 'Khaled', 3),
+	(2, 'Ali', 2),
+	(3, 'John', 1),
+	(4, 'Doe', 2);
+
+--Select project_id, director_id, count(*) From actordirector group by actor_id, director_id having count(*) >= 3;
+with t1 as (
+Select project_id, count(*) as counter, 
+DENSE_RANK() OVER(ORDER BY COUNT(*) DESC) AS dRank
+From project group by project_id
+)
+Select project_id, counter from t1 where dRank = 1 ;
 
 
