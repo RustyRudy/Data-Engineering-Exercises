@@ -88,4 +88,16 @@ From project group by project_id
 )
 Select project_id, counter from t1 where dRank = 1 ;
 
+--wihtout using window functions
+--this one doesn't show the project_id just the max number
+Select max(cntr) from (Select project_id, count(*) as cntr From project group by project_id) as t1;
+--this one shows the column as well without using the window function
+with t1 as (
+Select project_id, count(*) as counter 
+From project group by project_id
+)
+Select project_id from t1 where counter = (Select max(counter) from t1);
+
+
+
 
