@@ -1,0 +1,41 @@
+
+---Practice sql 20 th Nov 2025--------------------
+
+create table employee(
+id int,
+name varchar,
+salary int,
+departmentid int
+);
+
+create table department(
+id int,
+name varchar
+);
+
+insert into employee (id, name, salary, departmentid) 
+Values
+	(1, 'Joe', 70000, 1),
+	(2, 'Jim', 90000, 1),
+	(3, 'Henry', 80000, 2),
+	(4, 'Sam', 60000, 2),
+	(5, 'Max', 90000, 1);
+
+insert into department (id, name) 
+Values
+	(1, 'IT'),
+	(2, 'Sales');
+
+-- Select * from employee inner join department on employee.departmentid = department.id;
+with t1 as(
+Select employee.name as empname, salary, department.name as depname from employee inner join department on employee.departmentid = department.id
+)
+select max(salary) from t1 group by t1.depname;
+Select employee.name as empname, salary, department.name as depname from employee inner join department on employee.departmentid = department.id;
+with t1 as(
+Select employee.name as empname, salary, department.name as depname from employee inner join department on employee.departmentid = department.id
+),
+t2 as (
+select max(salary) from t1 group by depname
+)
+Select *from t1 inner join t2 on t2.max = t1.salary;
