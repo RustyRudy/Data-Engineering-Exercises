@@ -39,3 +39,20 @@ t2 as (
 select max(salary) from t1 group by depname
 )
 Select *from t1 inner join t2 on t2.max = t1.salary;
+
+--trying the same question with window functions------------------------------
+
+-- with t1 as(
+-- Select employee.name as empname, salary, department.name as depname from employee inner join department on employee.departmentid = department.id
+-- )
+-- select distinct max(salary) over(partition by depname) from t1 ;
+
+with t1 as(
+Select employee.name as empname, salary, department.name as depname from employee inner join department on employee.departmentid = department.id
+),
+t2 as (
+select distinct max(salary) over(partition by depname) from t1 
+)
+Select *from t1 inner join t2 on t2.max = t1.salary;
+
+
