@@ -20,7 +20,11 @@ def anagramCompare(string1, string2):
 
 if __name__ == '__main__':
 
-    aString = "net"
-    bString = "ten"
-    anagramCompare(aString, bString)
+    aString = "allyoop"
+    bString = "poollya"
+
+    if len(aString) == len(bString):
+        if sorted(aString) == sorted(bString):
+            print("They're  anagrams")
+    else: print("They're not anagrams")
 
