@@ -1,0 +1,55 @@
+------------------Practice 25 Nov 2025 after class---------------------------------------------------
+-------------------qs12-----------------------------------
+create table insurance (
+pid int,
+tiv_2015 float,
+tiv_2016 float,
+lat float,
+lon float
+);
+
+insert into insurance (pid, tiv_2015, tiv_2016, lat, lon)
+values
+	(1, 10, 5, 10, 10),
+	(2, 20, 20, 20, 20),
+	(3, 10, 30, 20, 20),
+	(4, 10, 40, 40, 40);
+
+select * from insurance;
+
+-- with t1 as (
+-- select lat, lon from insurance group by lat, lon having count(lat) = 1 and count(lon) = 1
+-- ),
+-- t2 as (
+-- select * from insurance inner join t1 on t1.lat = insurance.lat
+-- )
+-- select sum(tiv_2016) from t2;
+
+with t1 as (
+select * from insurance 
+where lat in (select lat from insurance group by lat having count(lat) = 1) 
+and 
+lon in (select lon from insurance group by lon having count(lon) = 1)
+),
+t2 as (
+select tiv_2015 from insurance group by tiv_2015 having count(tiv_2015) >1
+)
+select sum(tiv_2016) from (select * from t1 inner join t2 on t2.tiv_2015 = t1.tiv_2015) as sum2016;
+
+-------------------------------qs13--------------------------------------------------------------------------
+create table orders (
+order_number int,
+customer_number int
+);
+
+insert into orders (order_number, customer_number)
+values
+	(1, 1),
+	(2, 2),
+	(3, 3),
+	(4, 3);
+
+with count1 as (
+select customer_number, count(customer_number) as NoOfOrders from orders group by customer_number
+)
+select customer_number from count1 where nooforders = (select max(nooforders) from count1);
