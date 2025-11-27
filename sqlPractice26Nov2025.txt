@@ -1,0 +1,89 @@
+------------------Practice 26 Nov 2025 after class---------------------------------------------------
+-------------------qs14-----------------------------------
+create table world (
+name varchar,
+comtinent varchar,
+area int,
+population int,
+gdp bigint
+);
+
+insert into world (name, comtinent, area, population, gdp)
+values
+	('Afghaistan', 'Asia', 652230, 25500100, 203433000000),
+	('Albania', 'Europe', 28748, 2831741, 12960000000),
+	('Algeria', 'Africe', 2381741, 37100000, 188681000000),
+	('Andorra', 'Europe', 468, 78115, 3712000000),
+	('Angola', 'Africe', 1246700, 20609294, 100990000000);
+
+select name, population, area from world where area >= 3000000 or population >=25000000;
+
+-------------------qs15-----------------------------------
+
+create table courses (
+student varchar,
+class varchar
+);
+
+insert into courses (student, class)
+values
+	('A', 'MATH'),
+	('B', 'ENGLISH'),
+	('C', 'MATH'),
+	('D', 'BIOLOGY'),
+	('E', 'MATH'),
+	('F', 'COMPUTER'),
+	('G', 'MATH'),
+	('H', 'MATH'),
+	('I', 'MATH');
+
+select class from courses group by class having count(class) >= 5;
+
+-------------------qs16-----------------------------------
+
+create table sales (
+seller_id int,
+product_id int,
+buyer_id int,
+sale_date date,
+quantity int,
+price int
+);
+
+create table product (
+product_id int,
+product_name varchar,
+unit_price int
+);
+
+insert into sales (seller_id, product_id, buyer_id, sale_date, quantity, price)
+values
+	(1, 1, 1, '2019-01-21', 2, 2000),
+	(1, 2, 2, '2019-02-17', 1, 800),
+	(2, 2, 3, '2019-06-02', 1, 800),
+	(3, 3, 4, '2019-05-13', 2, 2800);
+
+insert into product (product_id, product_name, unit_price)
+values
+	(1, 'S8', 1000),
+	(2, 'G4', 800),
+	(3, 'iPhone', 1400);
+
+-- select * from sales inner join product on sales.product_id = product.product_id;
+
+-- select seller_id, sales.product_id as salesproduct_id, buyer_id, sale_date, quantity, price, 
+-- product.product_id as prod_id, product.product_name as prod_name, unit_price 
+-- from sales inner join product on sales.product_id = product.product_id;
+
+with t1 as (
+select seller_id, sales.product_id as salesproduct_id, buyer_id, sale_date, quantity, price, 
+product.product_id as prod_id, product.product_name as prod_name, unit_price from sales inner join product on sales.product_id = product.product_id
+)
+select prod_id, prod_name, sale_date from t1 where prod_name in (
+select prod_name from t1 where sale_date between '2019-01-01' and '2019-03-31' 
+)
+and prod_name not in (
+select prod_name from t1 where sale_date < '2019-01-01' or sale_date > '2019-03-31'
+);
+
+-------------------qs17-----------------------------------
