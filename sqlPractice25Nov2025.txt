@@ -50,6 +50,10 @@ values
 	(4, 3);
 
 with count1 as (
-select customer_number, count(customer_number) as NoOfOrders from orders group by customer_number
+select customer_number, count(customer_number) as NoOfOrders from orders 
+group by customer_number
 )
-select customer_number from count1 where nooforders = (select max(nooforders) from count1);
+select customer_number from count1 limit 1;
+-- select customer_number from count1 where nooforders = (select max(nooforders) from count1) limit 1;
+
+select customer_number from orders group by customer_number order by count(customer_number) desc limit 1;
