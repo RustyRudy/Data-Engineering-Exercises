@@ -86,4 +86,6 @@ and prod_name not in (
 select prod_name from t1 where sale_date < '2019-01-01' or sale_date > '2019-03-31'
 );
 
--------------------qs17-----------------------------------
+-------------------qs17-----------------------------------\
+--just an text addition-------bleh----------
+
