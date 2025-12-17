@@ -10,9 +10,11 @@ if __name__ == '__main__':
 
     import PySparkModulePractice
     import PySparkClasProj5
+    import pySparkHadoopHive
 
 
-    spark: SparkSession = SparkSession.builder.master("local[1]").appName("bootcamp.com").getOrCreate()
+    spark: SparkSession = SparkSession.builder.master("local[1]")\
+        .appName("bootcamp.com").enableHiveSupport().getOrCreate()
 
     # data = [("James","Smith","USA","CA"), ("Michael","Rose","USA","NY"), ("Robert","Williams","USA","CA"), ("Maria","Jones","USA","FL") ]
     # columns = ["firstname","lastname","country","state"]
@@ -272,4 +274,5 @@ if __name__ == '__main__':
     #
     #Practicing Modularity
     # PySparkModulePractice.sqlQueriesDF(spark)
-    PySparkClasProj5.classProj5(spark)
+    #PySparkClasProj5.classProj5(spark)
+    pySparkHadoopHive.pySparkHadoopHive(spark)
